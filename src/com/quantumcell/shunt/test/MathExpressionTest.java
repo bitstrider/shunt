@@ -22,7 +22,6 @@ public class MathExpressionTest {
 	}
 	@Test	
 	public void bytes(){
-		//Sugar.log(MathExpression.eval(Byte.class,"1+2-3*4").byteValue());
 		assertEquals(MathExpression.eval(Byte.class,"1+2-3*4").byteValue(),(byte) -9);
 		assertEquals(MathExpression.eval(Byte.class,"2*4").byteValue(), (byte) 8);
 		assertEquals(MathExpression.eval(Float.class,"5/3").byteValue(), (byte) 1);

@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.quantumcell.utils.Sugar;
 
 abstract public class Expression<T>{
 	public String encoded;
@@ -32,7 +31,7 @@ abstract public class Expression<T>{
 		
 		this.encoded = this.sanitize(s);
 
-//		Sugar.log("Parsing sanitized expression to infix: "+this.encoded);
+//		log("Parsing sanitized expression to infix: "+this.encoded);
 		
 		clearTokenArray(_infix);
 		tokenize(this.encoded, _infix);
@@ -128,11 +127,11 @@ abstract public class Expression<T>{
 						break;
 				}
 	
-	//			Sugar.print("token:"+token.encoded+", type:"+token.type+", ");
+	//			print("token:"+token.encoded+", type:"+token.type+", ");
 	//			Utils.printTokens(_operators,"_operators");
-	//			Sugar.print(", ");
+	//			print(", ");
 	//			Utils.printTokens(RPN,"_RPN");
-	//			Sugar.log("");
+	//			log("");
 			}
 	
 			while(_operators.size > 0) {
@@ -145,7 +144,7 @@ abstract public class Expression<T>{
 			//if(evaluated!=null) { // expression has not changed since last call to #eval
 			//	return evaluated.value; // stored value from last call
 			//}
-			//Sugar.log("Evaluating RPN... => "+encoded);
+			//log("Evaluating RPN... => "+encoded);
 			Array<Token> _tokens = new Array<Token>();  //MUST USE A UNIQUE STACK TO AVOID CONFLICT WHEN eval() is nested in other eval calls!
 
 //			Utils.printTokens(this.RPN,"Generated RPN","Ready for eval()...");
@@ -200,7 +199,7 @@ abstract public class Expression<T>{
 					break;
 				}
 //				Utils.printTokens(_tokens,"token:"+token.encoded+", _stack");
-//				Sugar.log("");
+//				log("");
 			}
 			
 //			Token<T> solution = _tokens.first();
@@ -210,7 +209,7 @@ abstract public class Expression<T>{
 //			evaluated.type = solution.type;
 			evaluated = _tokens.first();
 			
-			//Sugar.log("EVAL: " + encoded +" == "+evaluated.value);
+			//log("EVAL: " + encoded +" == "+evaluated.value);
 			return evaluated.value;
 		}
 

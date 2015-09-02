@@ -8,7 +8,7 @@ public class Token<T>{
 //	
 	@Override
 	public String toString(){
-		//Sugar.log(encoded);
+		//log(encoded);
 		return encoded;
 	}
 }

@@ -7,13 +7,14 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.quantumcell.shunt.Expression;
 import com.quantumcell.shunt.Operator;
 import com.quantumcell.shunt.Token;
-import com.quantumcell.utils.Sugar;
+import com.quantumcell.shunt.TokenType;
 
 public class ByteExpression extends Expression<Byte>{
 	
 	private static final ObjectMap<String,Operator<Byte>> FUNCTIONS = new ObjectMap<String,Operator<Byte>>(){{
 		Operator<Byte> add = new Operator<Byte>(){
 			@Override
+			public
 			Byte eval(Byte a, Byte b) {
 				return (byte) (a + b);
 			}
@@ -21,6 +22,7 @@ public class ByteExpression extends Expression<Byte>{
 
 		Operator<Byte> sub = new Operator<Byte>(){
 			@Override
+			public
 			Byte eval(Byte a, Byte b) {
 				return (byte) (a - b);
 			}
@@ -28,6 +30,7 @@ public class ByteExpression extends Expression<Byte>{
 		
 		Operator<Byte> mul = new Operator<Byte>(){
 			@Override
+			public
 			Byte eval(Byte a, Byte b) {
 				return (byte) (a * b);
 			}
@@ -35,6 +38,7 @@ public class ByteExpression extends Expression<Byte>{
 
 		Operator<Byte> div = new Operator<Byte>(){
 			@Override
+			public
 			Byte eval(Byte a, Byte b) {
 				return (byte) (a / b);
 			}
@@ -74,14 +78,10 @@ public class ByteExpression extends Expression<Byte>{
 		s = _enclosedLeadingPlus.matcher(s).replaceAll("("); // converts (+1) to (1)
 		s = _enclosedLeadingMinus.matcher(s).replaceAll("((0-$1)"); // converts (-1) to (0-1);
 		//s = s.replaceAll("", "(0-");
-		Sugar.log("(sanitized)"+s);
+		//log("(sanitized)"+s);
 		super.init(s);
 	}
-	
-	@Override
-	public ObjectMap<String, Operator<Byte>> getOperatorMap() {		
-		return FUNCTIONS;
-	}
+
 
 	@Override
 	protected Byte parseLiteral(String value) {
@@ -105,13 +105,13 @@ public class ByteExpression extends Expression<Byte>{
 		
 		char c = encoded.charAt(0);
 		if(Character.isDigit(c)) {
-			t.type = "literal"; // if the first character is a digit, its an operand, otherwise an operator
+			t.type = TokenType.Literal; // if the first character is a digit, its an operand, otherwise an operator
 		}else if(encoded.equals("(")){
-			t.type="lparen";
+			t.type=TokenType.StartClosure;
 		}else if(encoded.equals(")")){
-			t.type="rparen";
+			t.type=TokenType.EndClosure;
 		}else{ //if(getOperatorMap().containsKey(encoded)){
-			t.type="operator";
+			t.type=TokenType.Operator;
 		}
 		return t;
 	}
@@ -124,5 +124,17 @@ public class ByteExpression extends Expression<Byte>{
 	
 	public static Byte eval(String s){
 		return create(s).eval();
+	}
+
+	@Override
+	protected String sanitize(String encoded) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected Byte parseCustom(String encoded) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

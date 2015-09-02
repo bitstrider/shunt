@@ -8,12 +8,13 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.quantumcell.shunt.Expression;
 import com.quantumcell.shunt.Operator;
 import com.quantumcell.shunt.Token;
-import com.quantumcell.utils.Sugar;
+import com.quantumcell.shunt.TokenType;
 
 public class BigDecimalExpression extends Expression<BigDecimal>{
 	private static final ObjectMap<String,Operator<BigDecimal>> FUNCTIONS = new ObjectMap<String,Operator<BigDecimal>>(){{
 		Operator<BigDecimal> add = new Operator<BigDecimal>(){
 			@Override
+			public
 			BigDecimal eval(BigDecimal a, BigDecimal b) {
 				return a.add(b);
 			}
@@ -21,6 +22,7 @@ public class BigDecimalExpression extends Expression<BigDecimal>{
 
 		Operator<BigDecimal> sub = new Operator<BigDecimal>(){
 			@Override
+			public
 			BigDecimal eval(BigDecimal a, BigDecimal b) {
 				return a.subtract(b);
 			}
@@ -28,6 +30,7 @@ public class BigDecimalExpression extends Expression<BigDecimal>{
 		
 		Operator<BigDecimal> mul = new Operator<BigDecimal>(){
 			@Override
+			public
 			BigDecimal eval(BigDecimal a, BigDecimal b) {
 				return a.multiply(b);
 			}
@@ -35,6 +38,7 @@ public class BigDecimalExpression extends Expression<BigDecimal>{
 
 		Operator<BigDecimal> div = new Operator<BigDecimal>(){
 			@Override
+			public
 			BigDecimal eval(BigDecimal a, BigDecimal b) {
 				try{
 					return a.divide(b);
@@ -78,14 +82,10 @@ public class BigDecimalExpression extends Expression<BigDecimal>{
 		s = _enclosedLeadingPlus.matcher(s).replaceAll("("); // converts (+1) to (1)
 		s = _enclosedLeadingMinus.matcher(s).replaceAll("((0-$1)"); // converts (-1) to (0-1);
 		//s = s.replaceAll("", "(0-");
-		Sugar.log("(sanitized)"+s);
+		//log("(sanitized)"+s);
 		super.init(s);
 	}
 	
-	@Override
-	public ObjectMap<String, Operator<BigDecimal>> getOperatorMap() {		
-		return FUNCTIONS;
-	}
 
 	@Override
 	protected BigDecimal parseLiteral(String value) {
@@ -109,13 +109,13 @@ public class BigDecimalExpression extends Expression<BigDecimal>{
 		
 		char c = encoded.charAt(0);
 		if(Character.isDigit(c)||c=='.') {
-			t.type = "literal"; // if the first character is a digit, its an operand, otherwise an operator
+			t.type = TokenType.Literal; // if the first character is a digit, its an operand, otherwise an operator
 		}else if(encoded.equals("(")){
-			t.type="lparen";
+			t.type=TokenType.StartClosure;
 		}else if(encoded.equals(")")){
-			t.type="rparen";
+			t.type=TokenType.EndClosure;
 		}else{ //if(getOperatorMap().containsKey(encoded)){
-			t.type="operator";
+			t.type=TokenType.Operator;
 		}
 		return t;
 	}
@@ -127,5 +127,17 @@ public class BigDecimalExpression extends Expression<BigDecimal>{
 	}
 	public static BigDecimal eval(String s){
 		return (BigDecimal) create(s).eval();
+	}
+
+	@Override
+	protected String sanitize(String encoded) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected BigDecimal parseCustom(String encoded) {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }

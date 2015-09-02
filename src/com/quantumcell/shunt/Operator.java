@@ -1,6 +1,6 @@
 package com.quantumcell.shunt;
 
 abstract public class Operator<T>{
-	int precedence;
-	abstract T eval(T a, T b);
+	public int precedence;
+	abstract public T eval(T a, T b);
 }

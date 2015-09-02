@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.quantumcell.shunt.MathExpression;
+import com.quantumcell.shunt.expressions.MathExpression;
 
 public class MathExpressionTest {
 	static float precision = .001f;

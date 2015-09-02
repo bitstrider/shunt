@@ -1,10 +1,13 @@
-package com.quantumcell.shunt;
+package com.quantumcell.shunt.expressions;
 
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.quantumcell.shunt.Expression;
+import com.quantumcell.shunt.Operator;
+import com.quantumcell.shunt.Token;
 import com.quantumcell.utils.Sugar;
 
 public class BigDecimalExpression extends Expression<BigDecimal>{

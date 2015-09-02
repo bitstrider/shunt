@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.quantumcell.shunt.BigDecimalExpression;
+import com.quantumcell.shunt.expressions.BigDecimalExpression;
 
 public class BigDecimalExpressionTest {
 

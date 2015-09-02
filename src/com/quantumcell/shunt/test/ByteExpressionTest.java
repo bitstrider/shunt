@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.quantumcell.shunt.ByteExpression;
+import com.quantumcell.shunt.expressions.ByteExpression;
 
 public class ByteExpressionTest {
 
